@@ -1,0 +1,22 @@
+--- a/src/ServiceZ/Controllers/StatusController.cs
++++ b/src/ServiceZ/Controllers/StatusController.cs
+@@
++using Microsoft.AspNetCore.Mvc;
+
++namespace ServiceZ.Controllers
++{
++    [ApiController]
++    [Route("api/z")]
++    public class StatusController : ControllerBase
++    {
++        [HttpGet("status")]
++        public IActionResult Get() => Ok(new { status = "ok" });
++    }
++}
+
+- Validation:
+  - `dotnet test ./src/ServiceZ.Tests` -> exit code 0
+  - Start the service and `curl -s http://localhost:5000/api/z/status` -> `{"status":"ok"}`
+- EstimatedEffort: 2h
+- RollbackPlan: revert commit that adds StatusController.cs
+

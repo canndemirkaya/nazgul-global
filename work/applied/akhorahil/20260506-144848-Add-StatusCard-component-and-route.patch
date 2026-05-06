@@ -1,0 +1,30 @@
+--- a/web/src/components/StatusCard.jsx
++++ b/web/src/components/StatusCard.jsx
+@@
++import React, { useEffect, useState } from 'react';
+
++export default function StatusCard(){
++  const [status, setStatus] = useState('loading');
++  useEffect(()=>{ fetch('/api/z/status').then(r=>r.json()).then(j=>setStatus(j.status)).catch(()=>setStatus('error')) },[])
++  return (
++    <div className="status-card">
++      <h3>Service Z</h3>
++      <p>Status: {status}</p>
++    </div>
++  )
++}
+
+--- a/web/src/App.jsx
++++ b/web/src/App.jsx
+@@
++import StatusCard from './components/StatusCard';
+@@
++  <Route path="/status" element={<StatusCard/>} />
+
+- Validation:
+  - `npm --prefix web install` -> exit code 0
+  - `npm --prefix web run build` -> exit code 0
+  - Visit `/status` route in dev server and verify page shows `Status: ok` when backend is running
+- EstimatedEffort: 2h
+- RollbackPlan: revert commit(s) adding StatusCard and App route
+

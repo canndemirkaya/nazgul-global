@@ -1,6 +1,8 @@
 param(
     [switch]$Force,
-    [switch]$DryRun
+    [switch]$DryRun,
+    [switch]$RunChecks,
+    [string]$LogPath
 )
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -13,16 +15,16 @@ if (-not (Test-Path -Path (Join-Path $root 'agents'))) { Write-Error 'Missing ag
 if (-not (Test-Path -Path (Join-Path $root 'prompts'))) { Write-Error 'Missing prompts/ directory in installer root.'; exit 1 }
 
 function Copy-ItemSafe($source, $dest, $force, $dry) {
-    if (-not (Test-Path $source)) { return @{copied=@();skipped=@($source);warning="$source missing"} }
-    if ($dry) { return @{copied=@();skipped=@($source)} }
+    if (-not (Test-Path $source)) { return @{copied = @(); skipped = @($source); warning = "$source missing" } }
+    if ($dry) { return @{copied = @(); skipped = @($source) } }
     $destDir = Split-Path -Parent $dest
     if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir -Force | Out-Null }
-    if ((Test-Path $dest) -and (-not $force)) { return @{copied=@();skipped=@($dest)} }
+    if ((Test-Path $dest) -and (-not $force)) { return @{copied = @(); skipped = @($dest) } }
     Copy-Item -Path $source -Destination $dest -Force:$force
-    return @{copied=@($dest);skipped=@();warning=$null} 
+    return @{copied = @($dest); skipped = @(); warning = $null } 
 }
 
-$summary = [ordered]@{copied=@();skipped=@();warnings=@()}
+$summary = [ordered]@{copied = @(); skipped = @(); warnings = @() }
 
 if (-not $DryRun) {
     if (-not (Test-Path $agentsDir)) { New-Item -ItemType Directory -Path $agentsDir -Force | Out-Null }
@@ -51,10 +53,29 @@ Get-ChildItem -Path (Join-Path $root 'prompts') -Filter *.prompt.md -File | ForE
     if ($r.warning) { $summary.warnings += $r.warning }
 }
 
-# copy docs
+# copy docs (copy contents of repo docs into target docs to avoid nested docs/docs)
 $docsSrc = Join-Path $root 'docs'
 $docsDest = Join-Path $nazgulDocDir 'docs'
-if ($DryRun) { if (-not (Test-Path $docsSrc)) { $summary.warnings += "$docsSrc missing" } } else { if (Test-Path $docsSrc) { Copy-Item -Path $docsSrc -Destination $docsDest -Recurse -Force:$Force } }
+if ($DryRun) {
+    if (-not (Test-Path $docsSrc)) { $summary.warnings += "$docsSrc missing" }
+    else { $summary.skipped += $docsSrc }
+}
+else {
+    if (Test-Path $docsSrc) {
+        if (-not (Test-Path $docsDest)) { New-Item -ItemType Directory -Path $docsDest -Force | Out-Null }
+        Get-ChildItem -Path $docsSrc -Force | ForEach-Object {
+            $srcPath = $_.FullName
+            $destPath = Join-Path $docsDest $_.Name
+            if ((Test-Path $destPath) -and (-not $Force)) {
+                $summary.skipped += $destPath
+            }
+            else {
+                if ($_.PSIsContainer) { Copy-Item -Path $srcPath -Destination $destPath -Recurse -Force:$Force } else { Copy-Item -Path $srcPath -Destination $destPath -Force:$Force }
+                $summary.copied += $destPath
+            }
+        }
+    }
+}
 
 # copy root README
 $rootReadmeSrc = Join-Path $root 'README.md'
@@ -69,3 +90,21 @@ $summary.copied | ForEach-Object { Write-Host " - $_" }
 Write-Host "Skipped files:" -ForegroundColor Yellow
 $summary.skipped | ForEach-Object { Write-Host " - $_" }
 if ($summary.warnings.Count -gt 0) { Write-Host "Warnings:" -ForegroundColor Red; $summary.warnings | ForEach-Object { Write-Host " - $_" } }
+
+# Optional post-install validation
+if ($RunChecks) {
+    $checkScript = Join-Path (Join-Path $root 'scripts') '_check_agents.ps1'
+    if (-not (Test-Path $checkScript)) { Write-Host "Check script not found: $checkScript" -ForegroundColor Yellow }
+    else {
+        $timestamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+        if ([string]::IsNullOrWhiteSpace($LogPath)) { $logFile = Join-Path $nazgulDocDir "install_log_$timestamp.txt" } else { $logFile = $LogPath }
+        Write-Host "\nRunning post-install checks (logging to $logFile)..." -ForegroundColor Cyan
+        try {
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $checkScript 2>&1 | Tee-Object -FilePath $logFile
+            Write-Host "Post-install checks complete. Log: $logFile" -ForegroundColor Green
+        }
+        catch {
+            Write-Host "Post-install checks failed: $_" -ForegroundColor Red
+        }
+    }
+}
