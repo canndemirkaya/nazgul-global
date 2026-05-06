@@ -1,0 +1,39 @@
+# OS files
+Thumbs.db
+ehthumbs.db
+.DS_Store
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# .NET build
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+
+# Logs and temp
+*.log
+*.tmp
+*.swp
+*.bak
+
+# PowerShell temporary files
+*.ps1.tmp
+
+# Copilot/local installs (exclude any accidental local copies)
+.copilot/
