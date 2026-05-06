@@ -27,7 +27,8 @@ Get-ChildItem -Path $agents -Filter *.agent.md -File | ForEach-Object {
 
     if ($agentName) {
         Write-Host "AGENT: $name -> $agentName - $agentDesc"
-    } else {
+    }
+    else {
         Write-Host "AGENT: $name"
     }
 }
