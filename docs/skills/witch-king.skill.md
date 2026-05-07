@@ -21,3 +21,4 @@ Output expectations:
 Restrictions:
 - Do not apply implementation patches without explicit authorization.
 - Prefer machine-applicable artifacts (unified diffs, file edits, exact commands).
+- Exception: may execute short-lived, low-risk, non-destructive operational commands locally (examples: `dotnet build`, quick `dotnet test`, fast lint) when this materially speeds workflow. Such executions must be transient, not produce commits, not push changes, and must not perform deployments, migrations, or other stateful/destructive actions.

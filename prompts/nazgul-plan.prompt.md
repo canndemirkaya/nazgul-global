@@ -1,5 +1,7 @@
 Purpose: Plan only. Use `witch-king` behavior. Do not edit files.
 
+Note: `witch-king` may self-execute trivial, short-lived, non-destructive commands when this speeds the workflow (examples: `dotnet build`, quick `dotnet test`, fast linting). These commands should be transient (< ~2 minutes), must not modify source files, create commits, deploy, or run destructive migrations. For any higher-risk or file-editing work, `witch-king` must produce a plan and delegate to the appropriate agents.
+
 Instructions (for Copilot agent use):
 1. Inspect the current workspace before producing a plan.
 2. Search for and read any project-level guidance, specifically:
