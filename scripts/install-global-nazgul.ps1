@@ -53,6 +53,17 @@ Get-ChildItem -Path (Join-Path $root 'prompts') -Filter *.md -File | ForEach-Obj
     if ($r.warning) { $summary.warnings += $r.warning }
 }
 
+# ensure common template/example prompt files are included even if patterns differ
+$extraPrompts = @('khamul-proposal.template.md', 'khamul-proposal-examples.md')
+foreach ($ename in $extraPrompts) {
+    $src = Join-Path (Join-Path $root 'prompts') $ename
+    $dest = Join-Path $promptsDest $ename
+    $r = Copy-ItemSafe $src $dest $Force $DryRun
+    $summary.copied += $r.copied
+    $summary.skipped += $r.skipped
+    if ($r.warning) { $summary.warnings += $r.warning }
+}
+
 # copy docs (copy contents of repo docs into target docs to avoid nested docs/docs)
 $docsSrc = Join-Path $root 'docs'
 $docsDest = Join-Path $nazgulDocDir 'docs'

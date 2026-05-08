@@ -18,10 +18,20 @@ if (Test-Path $agentsSrc) {
     Write-Host "Agents source missing: $agentsSrc"
 }
 if (Test-Path $promptsSrc) {
-    Get-ChildItem -Path $promptsSrc -Filter *.prompt.md -File | ForEach-Object {
+    # copy common prompt files (both *.prompt.md and other .md templates)
+    Get-ChildItem -Path $promptsSrc -Include *.prompt.md,*.md -File | ForEach-Object {
         Copy-Item -Path $_.FullName -Destination (Join-Path $promptsDest $_.Name) -Force
         Write-Host "Copied prompt: $($_.Name)"
     }
+    # copy promposals folder if present
+    $promposalsSrc = Join-Path $srcRoot 'promposals'
+    if (Test-Path $promposalsSrc) {
+        Copy-Item -Path $promposalsSrc -Destination (Join-Path $nazgulDest 'promposals') -Recurse -Force
+        Write-Host "Copied promposals folder"
+    }
+    # copy repo-level copilot instructions if present
+    $copilotIns = Join-Path $srcRoot '.github\copilot-instructions.md'
+    if (Test-Path $copilotIns) { Copy-Item -Path $copilotIns -Destination (Join-Path $nazgulDest 'copilot-instructions.md') -Force; Write-Host "Copied copilot-instructions.md" }
 } else {
     Write-Host "Prompts source missing: $promptsSrc"
 }

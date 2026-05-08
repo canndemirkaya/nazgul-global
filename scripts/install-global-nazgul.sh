@@ -21,6 +21,7 @@ if [[ ! -d "$ROOT/prompts" ]]; then echo "Missing prompts/ directory in installe
 
 mkdir -p "$AGENTS_DIR"
 mkdir -p "$NAZGUL_DIR/prompts"
+mkdir -p "$NAZGUL_DIR/promposals"
 
 copy_file() {
   local src="$1" dest="$2"
@@ -32,6 +33,10 @@ copy_file() {
 
 for f in "$ROOT"/agents/*.agent.md; do copy_file "$f" "$AGENTS_DIR/$(basename "$f")"; done
 for f in "$ROOT"/prompts/*.md; do copy_file "$f" "$NAZGUL_DIR/prompts/$(basename "$f")"; done
+for f in "$ROOT"/promposals/*; do [[ -f "$f" ]] && copy_file "$f" "$NAZGUL_DIR/promposals/$(basename "$f")"; done
+
+# ensure repository-level copilot instructions are copied when present
+if [[ -f "$ROOT/.github/copilot-instructions.md" ]]; then copy_file "$ROOT/.github/copilot-instructions.md" "$NAZGUL_DIR/copilot-instructions.md"; fi
 
 if [[ $DRYRUN -eq 0 ]]; then
   cp -r "$ROOT/docs" "$NAZGUL_DIR/docs" || true

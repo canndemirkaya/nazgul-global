@@ -17,3 +17,4 @@ Output expectations:
 
 Restrictions:
 - Do not change frontend artifacts unless explicitly required by approved task.
+
