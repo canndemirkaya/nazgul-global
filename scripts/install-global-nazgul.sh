@@ -31,7 +31,7 @@ copy_file() {
 }
 
 for f in "$ROOT"/agents/*.agent.md; do copy_file "$f" "$AGENTS_DIR/$(basename "$f")"; done
-for f in "$ROOT"/prompts/*.prompt.md; do copy_file "$f" "$NAZGUL_DIR/prompts/$(basename "$f")"; done
+for f in "$ROOT"/prompts/*.md; do copy_file "$f" "$NAZGUL_DIR/prompts/$(basename "$f")"; done
 
 if [[ $DRYRUN -eq 0 ]]; then
   cp -r "$ROOT/docs" "$NAZGUL_DIR/docs" || true

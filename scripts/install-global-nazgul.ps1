@@ -44,7 +44,7 @@ Get-ChildItem -Path (Join-Path $root 'agents') -Filter *.agent.md -File | ForEac
 # copy prompts
 $promptsDest = Join-Path $nazgulDocDir 'prompts'
 if (-not $DryRun) { if (-not (Test-Path $promptsDest)) { New-Item -ItemType Directory -Path $promptsDest -Force | Out-Null } }
-Get-ChildItem -Path (Join-Path $root 'prompts') -Filter *.prompt.md -File | ForEach-Object {
+Get-ChildItem -Path (Join-Path $root 'prompts') -Filter *.md -File | ForEach-Object {
     $src = $_.FullName
     $dest = Join-Path $promptsDest $_.Name
     $r = Copy-ItemSafe $src $dest $Force $DryRun

@@ -30,7 +30,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\trigger_witchking_
 ```
 
 4. Inspect `scripts/witchking_approval_report.txt`. If the report marks your proposal as `ESCALATE`, stop and prepare runbooks, rollback plans, and request explicit user approval.
-5. For non-ESCLATE proposals, `witch-king` will indicate the preferred implementer; produce the machine-applicable patch and wait for `witch-king` or the user to approve applying commits.
+5. For non-ESCALATE proposals, `witch-king` will indicate the preferred implementer; produce the machine-applicable patch and wait for `witch-king` or the user to approve applying commits.
 
 Important policy
 - Agents must NOT perform `git commit`/`git push`/`git revert` without explicit user approval. Always provide a unified diff or patch and request approval before VCS operations.
