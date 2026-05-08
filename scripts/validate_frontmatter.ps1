@@ -4,7 +4,7 @@ Validate YAML frontmatter for agent files under agents/*.agent.md
 
 Checks:
  - frontmatter present
- - required keys: name, description, tools, agents
+ - required keys: name, description, tools (agents is optional)
  - tools and agents parsed as non-empty lists
  - unique `name` values across files
 

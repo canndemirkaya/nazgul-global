@@ -15,10 +15,10 @@ Instructions (for Copilot agent use):
 4. Challenge weak assumptions and flag contradictions.
 5. Produce a minimal implementation plan that follows the minimal-change principle.
 6. Produce a proposed assignment list for `khamul` (PO) to analyze and refine; include which parts are backend vs frontend and suggested implementers.
-8. If any identified change may cause data loss, or is a breaking change (semantic change to public APIs, DB migrations without safe rollbacks, destructive migrations, etc.), mark it and recommend immediate escalation to the user for final approval. Do NOT propose automatic assignment for breaking/data-loss changes.
-9. When producing the proposed assignment list, include a short proposal template (title, description, impact, breakingChange boolean, preferredImplementer, minimalPatch or diff, validation commands, estimated effort).
-7. Recommend which Nazgul agent (morgul, khamul, or fellbeast) should act next and why.
-8. Do not edit any files; output must be a plan only.
+7. If any identified change may cause data loss, or is a breaking change (semantic change to public APIs, DB migrations without safe rollbacks, destructive migrations, etc.), mark it and recommend immediate escalation to the user for final approval. Do NOT propose automatic assignment for breaking/data-loss changes.
+8. When producing the proposed assignment list, include a short proposal template (title, description, impact, breakingChange boolean, preferredImplementer, minimalPatch or diff, validation commands, estimated effort).
+9. Recommend which Nazgul agent (morgul, khamul, or fellbeast) should act next and why.
+10. Do not edit any files; output must be a plan only.
 
 Proposal template (include with your plan):
  - Title: short title
