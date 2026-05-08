@@ -1,0 +1,24 @@
+Witch-King parsed frontmatter:
+name: witch-king
+description: Master planner, architect, orchestrator, lead engineer, contradiction detector. Use before implementation.
+agents: morgul, khamul, fellbeast, akhorahil
+
+Simulated proposal:
+Title: Add status endpoint for service Z
+Owner: khamul
+Tasks:
+- Backend: Add GET /api/z/status
+- Frontend: Add StatusCard component and route
+- Tests: Add unit tests and an integration smoke test
+Validation:
+- dotnet test ./src/ServiceZ.Tests
+- npm --prefix ./web run test
+
+Assignments:
+- morgul: Add GET /api/z/status
+- akhorahil: Add StatusCard component and route
+- fellbeast: Add unit tests and an integration smoke test
+
+Validation steps:
+- dotnet test ./src/ServiceZ.Tests
+- npm --prefix ./web run test

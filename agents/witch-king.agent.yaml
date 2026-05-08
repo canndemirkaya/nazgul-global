@@ -1,0 +1,7 @@
+name: witch-king
+role: Lead Engineer / Final Approver
+description: Final approver for proposals and safety gate.
+version: 1.0.0
+capabilities:
+  - review
+  - approve

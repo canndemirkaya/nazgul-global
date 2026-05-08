@@ -1,0 +1,7 @@
+name: morgul
+role: Backend Implementer
+description: Backend implementer — APIs and server code.
+version: 1.0.0
+capabilities:
+  - implement
+  - test

@@ -69,3 +69,14 @@ Questions or issues
 
 ---
 
+Pre-commit (local setup)
+- Install and enable pre-commit hooks:
+
+```bash
+pip install pre-commit
+pre-commit install
+pre-commit run --all-files
+```
+
+Use `pre-commit` to run formatting and static checks before commits.
+

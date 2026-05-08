@@ -1,0 +1,7 @@
+name: fellbeast
+role: Reviewer & Gatekeeper
+description: Writes and runs tests; validates builds.
+version: 1.0.0
+capabilities:
+  - test
+  - review

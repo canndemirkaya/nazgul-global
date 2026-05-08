@@ -1,0 +1,18 @@
+*** Begin Patch
+*** Update File: scripts/storage.py
+@@
+     def rotate(self, max_bytes: int = 10_000_000):
+         """Rotate the file if it exceeds `max_bytes`. Renames current file with timestamp."""
+         try:
+             size = self.path.stat().st_size
+         except Exception:
+             return False
+         if size <= max_bytes:
+             return False
+-        dst = self.path.with_name(self.path.stem + "-" + time.strftime("%Y%m%dT%H%M%S") + self.path.suffix)
++        dst = self.path.with_name(self.path.stem + "-" + time.strftime("%Y%m%dT%H%M%S") + self.path.suffix)
+         self.path.rename(dst)
+         # Create empty new file
+         self.path.write_text("", encoding="utf-8")
+         return True
+*** End Patch

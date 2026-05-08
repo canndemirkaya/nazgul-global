@@ -1,0 +1,8 @@
+name: khamul
+role: Product Owner
+description: Product Owner agent — drafts proposals and acceptance criteria.
+version: 1.0.0
+capabilities:
+  - propose
+  - validate
+  - format-patch
