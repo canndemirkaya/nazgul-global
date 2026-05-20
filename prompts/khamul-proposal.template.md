@@ -1,3 +1,9 @@
+---
+title: Khamul Proposal Template
+description: Template fields and instructions for Khamul proposal generation.
+author: nazgul
+---
+
 Purpose: Template for `khamul` (PO) proposals. Fill every field; be explicit about breaking changes and validation commands.
 
 Template fields:

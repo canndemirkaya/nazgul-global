@@ -1,3 +1,9 @@
+---
+title: Nazgul Release Check
+description: Release readiness checklist and validation instructions for reviewers.
+author: nazgul
+---
+
 Purpose: Release readiness check using `fellbeast` behavior.
 
 Instructions (for Copilot agent use):

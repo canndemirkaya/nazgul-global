@@ -1,15 +1,17 @@
 ---
+title: Fellbeast
+author: nazgul
 name: fellbeast
 description: Reviewer, tester, build validator, release gatekeeper, and DevOps sanity checker.
 tools:
-	- search
-	- read
-	- edit
-	- agent
-	- execute
-	- execute/sendToTerminal
-	- todo
-	- terminal
+  - search
+  - read
+  - edit
+  - agent
+  - execute
+  - execute/sendToTerminal
+  - todo
+  - terminal
 ---
 
 Role:

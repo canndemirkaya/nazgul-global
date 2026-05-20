@@ -1,15 +1,17 @@
 ---
+title: Morgul
+author: nazgul
 name: morgul
 description: Backend, API, .NET/C#, database, integration, and data access implementation agent.
 tools:
-	- search
-	- read
-	- edit
-	- agent
-	- execute
-	- execute/sendToTerminal
-	- todo
-	- terminal
+  - search
+  - read
+  - edit
+  - agent
+  - execute
+  - execute/sendToTerminal
+  - todo
+  - terminal
 ---
 
 Role:

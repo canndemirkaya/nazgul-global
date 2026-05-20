@@ -88,7 +88,7 @@ def session_path(session_id: str) -> pathlib.Path:
 
 def open_session(session_id: str) -> Storage:
     """Return a Storage instance pointed at a session-specific JSONL file."""
-    return Storage(str(session_path(session_id)))
+    return Storage(str(pathlib.Path(session_path(session_id))))
 
 
 def index_path() -> pathlib.Path:
@@ -108,7 +108,7 @@ def create_session(session_id: str, metadata: dict | None = None) -> dict:
     if "ts" not in meta:
         meta["ts"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     line = json.dumps(meta, ensure_ascii=False)
-    idx = index_path()
+    idx = pathlib.Path(index_path())
     with open(idx, "a", encoding="utf-8") as fh:
         fh.write(line + "\n")
         fh.flush()
@@ -117,7 +117,9 @@ def create_session(session_id: str, metadata: dict | None = None) -> dict:
         except Exception:
             pass
     # ensure session file exists
-    sp = session_path(session_id)
+    sp = pathlib.Path(session_path(session_id))
+    # ensure parent directory exists (tests may patch session_path to a tmpdir)
+    sp.parent.mkdir(parents=True, exist_ok=True)
     if not sp.exists():
         sp.write_text("", encoding="utf-8")
     return meta
@@ -125,7 +127,7 @@ def create_session(session_id: str, metadata: dict | None = None) -> dict:
 
 def read_sessions():
     """Yield session index entries from `work/sessions.jsonl`."""
-    idx = index_path()
+    idx = pathlib.Path(index_path())
     if not idx.exists():
         return
     with open(idx, "r", encoding="utf-8") as fh:

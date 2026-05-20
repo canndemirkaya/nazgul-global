@@ -1,3 +1,9 @@
+---
+title: Nazgul Review
+description: Review instructions and checklist for `fellbeast` behavior.
+author: nazgul
+---
+
 Purpose: Review pending changes using `fellbeast` behavior.
 
 Instructions (for Copilot agent use):

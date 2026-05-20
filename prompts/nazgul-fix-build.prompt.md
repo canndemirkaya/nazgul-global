@@ -1,3 +1,9 @@
+---
+title: Nazgul Fix Build
+description: Instructions to diagnose and fix build errors in a disciplined manner.
+author: nazgul
+---
+
 Purpose: Fix build errors following a disciplined approach.
 
 Instructions (for Copilot agent use):

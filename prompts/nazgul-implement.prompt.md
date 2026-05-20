@@ -1,3 +1,9 @@
+---
+title: Nazgul Implement
+description: End-to-end implementation workflow and assignment rules for Nazgul agents.
+author: nazgul
+---
+
 Purpose: End-to-end implementation workflow using Nazgul agents.
 
 Instructions (for Copilot agent use):

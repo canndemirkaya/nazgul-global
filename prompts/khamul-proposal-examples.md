@@ -1,3 +1,10 @@
+-
+---
+title: Khamul Proposal Examples
+description: Example proposals and machine-applicable patches for Khamul to use as references.
+author: nazgul
+---
+
 # Khamul proposal examples (machine-ready)
 
 Example 1 — Add status endpoint for Service Z

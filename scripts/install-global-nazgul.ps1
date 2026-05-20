@@ -6,6 +6,11 @@ param(
 )
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
+# If the script lives inside a 'scripts' folder, prefer the parent directory (repo root)
+if (-not (Test-Path -Path (Join-Path $root 'agents'))) {
+    $maybeRoot = Split-Path -Parent $root
+    if (Test-Path -Path (Join-Path $maybeRoot 'agents')) { $root = $maybeRoot }
+}
 Write-Host "Nazgul installer root: $root"
 
 $agentsDir = Join-Path $env:USERPROFILE ".copilot\agents"
